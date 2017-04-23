@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cadastre-se</title>
+</head>
+<body>
+	<h1>{{Titulo}}</h1>
+	<p style="color: red;">{{exception}}</p>
+	<form action="usuario" method="POST">{% csrf_token %} {{ form.as_p }} <input type="submit" value="Submit" /> </form>
+	{{Nome}}{{Email}}{{Senha}}
+</body>
+</html>
