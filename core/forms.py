@@ -8,3 +8,7 @@ class UsuarioForm(forms.Form):
 class UsuarioLogin(forms.Form):
     nome = forms.CharField(max_length=100)
     senha = forms.CharField(widget=forms.PasswordInput)
+
+class NovaObra(forms.Form):
+	nome = forms.CharField(max_length=50)
+	sinopse = forms.CharField(max_length=500)

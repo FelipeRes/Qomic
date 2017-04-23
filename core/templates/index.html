@@ -6,6 +6,7 @@
 <body>
 	<h1>Qomic</h1>
 	{% if login %}
+		<a href="profile">Minha conta</a>
 		<a href="logout">Logout</a>
 	{% else %}
 		<p style="color: {{messageColor}};">{{loginMessage}}</p>

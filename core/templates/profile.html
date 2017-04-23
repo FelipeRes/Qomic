@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Minha Conta</title>
+</head>
+<body>
+	<h1>{{nomeUsuario}}</h1>
+	<a href="profile/nova_obra/">Criar Obra</a>
+
+	{% if obras %}
+		<table border=1px>
+		<tr>
+	    		<th>Lista de Obras</td>
+	    		<th>Ativada</td>
+	    </tr>
+	    {% for obra in obras %}
+	    	<tr>
+	    		<th><a href='profile/obra/{{ obra.id }}/alterar'>{{ obra }}</a></td>
+	    		<th>{{ obra.ativada }}</td>
+	    	</tr>
+	    {% endfor %}
+	    </table>
+	{% else %}
+	    <p>Nenhuma obra</p>
+	{% endif %}
+</body>
+</html>
