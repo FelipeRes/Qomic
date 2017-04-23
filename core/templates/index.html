@@ -4,7 +4,17 @@
 	<title>Qomic</title>
 </head>
 <body>
-	<h1>{{Titulo}}</h1>
-	<a href="usuario">Cadsatre-se</a>
+	<h1>Qomic</h1>
+	{% if login %}
+		<a href="logout">Logout</a>
+	{% else %}
+		<p style="color: {{messageColor}};">{{loginMessage}}</p>
+		<form action='' method="POST">
+			{{ form.as_p }} 
+			{% csrf_token %}
+			<input type="submit" value="Logar"/> ou 
+			<button><a href="usuario">Cadsatre-se</a></button>
+		</form>
+	{% endif %}
 </body>
 </html>

@@ -4,3 +4,7 @@ class UsuarioForm(forms.Form):
     nome = forms.CharField(max_length=100)
     email = forms.EmailField()
     senha = forms.CharField(widget=forms.PasswordInput)
+
+class UsuarioLogin(forms.Form):
+    nome = forms.CharField(max_length=100)
+    senha = forms.CharField(widget=forms.PasswordInput)

@@ -73,18 +73,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'qomic_plataform.wsgi.application'
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 import dj_database_url
 DATABASES = {'default': dj_database_url.config(default='postgres://dapxjftgswjius:7c4dc7649f6df835d21ffb84575c85c2e4cfcaa4ad8fa05173793395270c729c@ec2-50-19-95-47.compute-1.amazonaws.com:5432/d8vqb45qqit30r')}
-'''DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}'''
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
