@@ -119,6 +119,7 @@ def alterar_obra(request, obra_id):
 			'action':'Alterar Obra',
 			'submeterAcao':'Salvar',
 			'obra':obra,
+			'capitulos':models.Capitulo.objects.filter(obra=obra_id),
 			},)
 
 @login_required
@@ -127,3 +128,83 @@ def deletar_obra(request, obra_id):
 	obra = models.Obra.objects.get(usuario=usuario,id=obra_id)
 	obra.delete()
 	return HttpResponseRedirect(reverse(profile))
+
+@login_required
+def novo_capitulo(request, obra_id):
+	if request.method == 'POST':
+		form = forms.NovoCapitulo(request.POST,request.FILES)
+		if form.is_valid():
+			obra = models.Obra.objects.get(id=obra_id)
+			nomeCapitulo = form.cleaned_data['nome']
+			capa = form.cleaned_data['capa']
+			capitulo = models.Capitulo(obra=obra,nomeCapitulo=nomeCapitulo,disponivel=False,capa=capa)
+			capitulo.save()
+			return HttpResponseRedirect(reverse(profile))
+		else:
+			return HttpResponse("Ocorreu algum erro")
+	else:
+		form = forms.NovoCapitulo()
+		return render(request,'capitulo_form.html',{
+			'form': form,
+			'action':'Criar Capitulo',
+			'submeterAcao':'Criar Novo Capitulo',
+			})
+
+@login_required
+def alterar_capitulo(request, capitulo_id):
+	if request.method == 'POST':
+		form = forms.AlterarCapitulo(request.POST,request.FILES)
+		if form.is_valid():
+			capitulo = models.Capitulo.objects.get(id=capitulo_id)
+			if form.cleaned_data['nome'] is not None:
+				capitulo.nomeCapitulo = form.cleaned_data['nome']
+			if form.cleaned_data['capa'] is not None:
+				capitulo.capa = form.cleaned_data['capa']
+			if form.cleaned_data['disponivel'] is not None:
+				capitulo.disponivel = form.cleaned_data['disponivel']
+			capitulo.save()
+			return HttpResponseRedirect(reverse(profile))
+		else:
+			return HttpResponse("Erro de envio de formulario")
+	else:
+		capitulo = models.Capitulo.objects.get(id=capitulo_id)
+		form = forms.AlterarCapitulo(initial={
+			'nome':capitulo.nomeCapitulo,
+			'capa':capitulo.capa,
+			'disponivel':capitulo.disponivel,})
+		form2 = forms.NovaPagina()
+		return render(request,'capitulo.html',{
+			'form': form,
+			'form2': form2,
+			'action':'Alterar Capitulo',
+			'submeterAcao':'Salvar',
+			'capitulo':capitulo,
+			'paginas': models.Pagina.objects.filter(capitulo=capitulo),
+			},)
+
+@login_required
+def deletar_capitulo(request, capitulo_id):
+	capitulo = models.Capitulo.objects.get(id=capitulo_id)
+	capitulo.delete()
+	return HttpResponseRedirect(reverse(profile))
+
+@login_required
+def inserir_pagina(request, capitulo_id):
+	if request.method == 'POST':
+		form = forms.NovaPagina(request.POST,request.FILES)
+		if form.is_valid():
+			capitulo = models.Capitulo.objects.get(id=capitulo_id)
+			pagina = models.Pagina(pagina=form.cleaned_data['pagina'],capitulo=capitulo)
+			pagina.save()
+			return redirect('/profile/capitulo/'+str(capitulo_id)+'/alterar/')
+		else:
+			return HttpResponse("Ocorreu algum erro")
+	else:
+		return redirect('/profile/capitulo/'+str(capitulo_id)+'/alterar/')
+
+@login_required
+def deletar_pagina(request, pagina_id):
+	pagina = models.Pagina.objects.get(id=pagina_id)
+	capitulo = pagina.capitulo
+	pagina.delete()
+	return redirect('/profile/capitulo/'+str(capitulo.id)+'/alterar/')

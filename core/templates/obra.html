@@ -11,5 +11,24 @@
 		<input type="submit" value="Salvar Alterações" /> 
 		<button><a href="/profile/obra/{{ obra.id }}/deletar">Deletar Obra</a></button>
 	</form>
+	<hr>
+	{% if capitulos %}
+		<table border=1px>
+		<tr>
+	    		<th colspan="2">Lista de Capitulos</td>
+	    		<th>Ativada</td>
+	    </tr>
+	    {% for capitulo in capitulos %}
+	    	<tr>
+	    		<th><img src='{{ capitulo.capa.url }}' width="200px" height="200px"></td>
+	    		<th><a href='/profile/capitulo/{{ capitulo.id }}/alterar/'>{{ capitulo }}</a></td>
+	    		<th>{{ capitulo.disponivel }}</td>
+	    	</tr>
+	    {% endfor %}
+	    </table>
+	{% else %}
+		<p>Nenhuma Capitulo</p>
+	{% endif %}
+	<a href="/profile/capitulo/{{obra.id}}/new/">Criar capitulo</a>
 </body>
 </html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Criar Capitulo</title>
+</head>
+<body>
+	<h2>{{action}}</h2>
+	<form action="." method="POST" enctype="multipart/form-data">
+		{% csrf_token %} 
+		{{ form.as_p }} 
+		<input type="submit" value="{{submeterAcao}}" /> 
+	</form>
+</body>
+</html>
