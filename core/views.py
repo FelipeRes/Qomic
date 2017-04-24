@@ -9,31 +9,10 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
 	if request.user.is_authenticated():
-		context = {'login':True,}
-		return render(request, 'index.html',context)
+		context = {'login':True,'obras':models.Obra.objects.filter(ativada=True),'user':request.user.username}
 	else:
-		if request.method == 'POST':
-			form = forms.UsuarioLogin(request.POST)
-			if form.is_valid():
-				nomeUsuario = form.cleaned_data['nome']
-				senha = form.cleaned_data['senha']
-				user = authenticate(username=nomeUsuario, password=senha)
-				if user is not None:
-					if user.is_active:
-						logout(request)
-						login(request, user)
-						return HttpResponseRedirect(reverse(index))
-				else:
-					context = {'form': form,
-						'loginMessage':'Usuario ou senha estao incorretos',
-						'messageColor':'red',
-						'login':False,
-						}
-					return render(request, 'index.html',context)
-		else:
-			form = forms.UsuarioLogin()
-			context = {'form': form,'login':False,}
-			return render(request, 'index.html',context)
+		context = {'login':False,'obras':models.Obra.objects.filter(usuario=True),'user':request.user.username}
+	return render(request, 'index2.html',context)
 
 def usuario(request):
 	if request.method == 'POST':
@@ -56,11 +35,35 @@ def user_logout(request):
 	logout(request)
 	return HttpResponseRedirect(reverse(index))
 
+def user_login(request):
+	if request.method == 'POST':
+		form = forms.UsuarioLogin(request.POST)
+		if form.is_valid():
+			nomeUsuario = form.cleaned_data['nome']
+			senha = form.cleaned_data['senha']
+			user = authenticate(username=nomeUsuario, password=senha)
+			if user is not None:
+				if user.is_active:
+					logout(request)
+					login(request, user)
+					return HttpResponseRedirect(reverse(index))
+			else:
+				context = {'form': form,
+					'loginMessage':'Usuario ou senha estao incorretos',
+					'messageColor':'red',
+					'login':False,
+					}
+				return render(request, 'login.html',context)
+	else:
+		form = forms.UsuarioLogin()
+		context = {'form': form,'login':False,}
+		return render(request, 'login.html',context)
+
 @login_required
 def profile(request):
 	if request.user.is_authenticated():
 		usuario = User.objects.get(username=request.user.username)
-		contexto = {'obras':models.Obra.objects.filter(usuario=usuario)}
+		contexto = {'obras':models.Obra.objects.filter(usuario=usuario), 'user':usuario}
 		return render(request,'profile.html',contexto)
 
 @login_required

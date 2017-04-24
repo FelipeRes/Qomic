@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<title>Qomic</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
+.w3-bar-block .w3-bar-item {padding:20px}
+</style>
+<body>
+
+<!-- Top menu -->
+<div class="w3-top">
+  <div class="w3-white w3-xlarge" style="max-width:1200px;margin:auto">
+    <!--<div class="w3-button w3-padding-16 w3-left" onclick="w3_open()">☰</div>-->
+    <div class="w3-right w3-padding-16">
+      {% if login %}
+      <a href="profile" class="w3-bar-item w3-button">Profile</a>
+      <a href="logout" class="w3-bar-item w3-button">Logout</a>
+      {% else %}
+      <a href="login" class="w3-bar-item w3-button">login</a>
+      {% endif %}
+    </div>
+    <div class="w3-center w3-padding-16"><a href=''><img src="{% static '/template/logo.png' %}" width="200"></a></div>
+  </div>
+</div>
+  
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
+  {% block content %}
+  {% endblock %}
+  <!-- About Section -->
+  <div class="w3-container w3-padding-32 w3-center">  
+    <h3>Sobre QOMIC</h3><br>
+    <div class="w3-padding-32">
+      <h6><i>Criando quadrinhos digitais</i></h6>
+      <p>Qomic é um sistema de publicação de quadrinhos digitais de teste para a matéria de Programação Para Internert do curso de Análise e Desenvolvimento de Sistemas do IFPI Campus Teresina Central. O sistema é apenas um protótipo para avaliar e entender os recursos do framework Django e a plataforma Heroku</p>
+    </div>
+  </div>
+<!-- End page content -->
+<hr>
+</div>
+</html>

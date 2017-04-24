@@ -1,28 +1,30 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Minha Conta</title>
-</head>
-<body>
-	<h1>{{nomeUsuario}}</h1>
-	{% if obras %}
-		<table border=1px>
-		<tr>
-	    		<th colspan="2">Lista de Obras</td>
-	    		<th>Ativada</td>
-	    </tr>
-	    {% for obra in obras %}
-	    	<tr>
-	    		<th><img src='{{ obra.capa.url }}' width="200px" height="200px"></td>
-	    		<th><a href='profile/obra/{{ obra.id }}/alterar'>{{ obra }}</a></td>
-	    		<th>{{ obra.ativada }}</td>
-	    	</tr>
-	    {% endfor %}
-	    </table>
-	{% else %}
-	    <p>Nenhuma obra</p>
-	{% endif %}
-	<a href="profile/obra/new">Criar Obra</a>
-</body>
-</html>
+{% extends 'template.html' %}
+{% block content %}
+<h1>Lista de obras de {{user.username}}</h1>
+
+{% if obras %}
+	<table class="w3-table-all">
+    {% for obra in obras %}
+    	<tr>
+    		<td>
+    		<h2>{{obra.nomeObra}}</h2>
+    		<a href='profile/obra/{{ obra.id }}/alterar'>
+    			<img src='{{ obra.capa.url }}' width="210px" height="290px">
+    		</a>
+    		</td>
+    		<td>
+    		<p><big>Sinopse:</big></br>{{obra.sinopse}}</p>
+    		<p><big>Status:</big></br>
+    			{% if obra.ativada %}Disponivel para visualização{%else%}Indisponivel para visualização{%endif%}
+    		</p>
+    		<a href='profile/obra/{{ obra.id }}/alterar'><big>Editar</big></a>
+    		</td>
+    	</tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <h2>Nenhuma obra...</h2>
+{% endif %}
+
+<a href="profile/obra/new" class="w3-bar-item w3-button"><h2>Criar Obra</h2></a>
+{% endblock %}

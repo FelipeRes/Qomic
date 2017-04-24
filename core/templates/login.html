@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Qomic</title>
+</head>
+<body>
+	<h1>Qomic</h1>
+	{% if login %}
+		<a href="profile">Minha conta</a>
+		<a href="logout">Logout</a>
+	{% else %}
+		<p style="color: {{messageColor}};">{{loginMessage}}</p>
+		<form action='' method="POST">
+			{{ form.as_p }} 
+			{% csrf_token %}
+			<input type="submit" value="Logar"/> ou 
+			<button><a href="usuario">Cadsatre-se</a></button>
+		</form>
+	{% endif %}
+</body>
+</html>
