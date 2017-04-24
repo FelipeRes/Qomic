@@ -117,7 +117,7 @@ def alterar_obra(request, obra_id):
 			'form': form,
 			'usuario':request.user.username,
 			'action':'Alterar Obra',
-			'submeterAcao':'Salvar Alterações',
+			'submeterAcao':'Salvar',
 			'obra':obra,
 			},)
 
