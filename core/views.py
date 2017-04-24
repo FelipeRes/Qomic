@@ -66,17 +66,64 @@ def profile(request):
 @login_required
 def nova_obra(request):
 	if request.method == 'POST':
-		form = forms.NovaObra(request.POST)
+		form = forms.NovaObra(request.POST,request.FILES)
 		if form.is_valid():
 			usuario = User.objects.get(username=request.user.username)
 			nomeObra = form.cleaned_data['nome']
 			sinopse = form.cleaned_data['sinopse']
-			obra = models.Obra(usuario=usuario,nomeObra=nomeObra,sinopse=sinopse,ativada=False)
+			capa = form.cleaned_data['capa']
+			obra = models.Obra(usuario=usuario,nomeObra=nomeObra,sinopse=sinopse,ativada=False,capa=capa)
 			obra.save()
 			return HttpResponseRedirect(reverse(profile))
 		else:
-			return HttpResponse("Ocorreu algum erro")
+			return HttpResponse(request.POST)
 	else:
 		form = forms.NovaObra()
-		return render(request,'criarObra.html',{'form': form,'usuario':request.user.username})
+		return render(request,'obra_form.html',{
+			'form': form,
+			'usuario':request.user.username,
+			'action':'Criar Obra',
+			'submeterAcao':'Criar Nova Obra',
+			})
 
+@login_required
+def alterar_obra(request, obra_id):
+	if request.method == 'POST':
+		form = forms.AlterarObra(request.POST,request.FILES)
+		if form.is_valid():
+			usuario = User.objects.get(username=request.user.username)
+			obra = models.Obra.objects.get(usuario=usuario,id=obra_id)
+			if form.cleaned_data['nome'] is not None:
+				obra.nomeObra = form.cleaned_data['nome']
+			if form.cleaned_data['sinopse'] is not None:
+				obra.sinopse = form.cleaned_data['sinopse']
+			if form.cleaned_data['capa'] is not None:
+				obra.capa = form.cleaned_data['capa']
+			if form.cleaned_data['ativada'] is not None:
+				obra.ativada = form.cleaned_data['ativada']
+			obra.save()
+			return HttpResponseRedirect(reverse(profile))
+		else:
+			return HttpResponse("Erro de envio de formulario")
+	else:
+		usuario = User.objects.get(username=request.user.username)
+		obra = models.Obra.objects.get(usuario=usuario,id=obra_id)
+		form = forms.AlterarObra(initial={
+			'nome':obra.nomeObra,
+			'sinopse':obra.sinopse,
+			'capa':obra.capa,
+			'ativada':obra.ativada,})
+		return render(request,'obra.html',{
+			'form': form,
+			'usuario':request.user.username,
+			'action':'Alterar Obra',
+			'submeterAcao':'Salvar Alterações',
+			'obra':obra,
+			},)
+
+@login_required
+def deletar_obra(request, obra_id):
+	usuario = User.objects.get(username=request.user.username)
+	obra = models.Obra.objects.get(usuario=usuario,id=obra_id)
+	obra.delete()
+	return HttpResponseRedirect(reverse(profile))

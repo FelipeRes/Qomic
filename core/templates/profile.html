@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,16 +6,15 @@
 </head>
 <body>
 	<h1>{{nomeUsuario}}</h1>
-	<a href="profile/nova_obra/">Criar Obra</a>
-
 	{% if obras %}
 		<table border=1px>
 		<tr>
-	    		<th>Lista de Obras</td>
+	    		<th colspan="2">Lista de Obras</td>
 	    		<th>Ativada</td>
 	    </tr>
 	    {% for obra in obras %}
 	    	<tr>
+	    		<th><img src='{{ obra.capa.url }}' width="200px" height="200px"></td>
 	    		<th><a href='profile/obra/{{ obra.id }}/alterar'>{{ obra }}</a></td>
 	    		<th>{{ obra.ativada }}</td>
 	    	</tr>
@@ -23,5 +23,6 @@
 	{% else %}
 	    <p>Nenhuma obra</p>
 	{% endif %}
+	<a href="profile/obra/new">Criar Obra</a>
 </body>
 </html>

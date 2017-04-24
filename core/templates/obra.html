@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{obra.Nome}}</title>
+</head>
+<body>
+	<h2>{{obra.nomeObra}}</h2>
+	<form action="." method="POST" enctype="multipart/form-data">
+		{% csrf_token %} 
+		{{ form.as_p }} 
+		<input type="submit" value="Salvar Alterações" /> 
+		<button><a href="/profile/obra/{{ obra.id }}/deletar">Deletar Obra</a></button>
+	</form>
+</body>
+</html>

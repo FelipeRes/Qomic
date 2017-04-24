@@ -12,3 +12,11 @@ class UsuarioLogin(forms.Form):
 class NovaObra(forms.Form):
 	nome = forms.CharField(max_length=50)
 	sinopse = forms.CharField(max_length=500)
+	capa = forms.ImageField(label='Seleciona uma imagem de capa',widget=forms.FileInput())
+	ativada = forms.BooleanField(label='Disponibilizar visualização')
+
+class AlterarObra(forms.Form):
+	nome = forms.CharField(max_length=50)
+	sinopse = forms.CharField(max_length=500,required=False)
+	capa = forms.ImageField(label='Seleciona uma imagem de capa',widget=forms.FileInput(),required=False)
+	ativada = forms.BooleanField(label='Disponibilizar visualização',required=False)

@@ -8,5 +8,6 @@ class Obra(models.Model):
 	nomeObra = models.CharField(max_length=50)
 	sinopse = models.CharField(max_length=500)
 	ativada = models.BooleanField()
+	capa = models.ImageField(upload_to='obra_capas/', default = 'obra_capas/None/no-img.jpg')
 	def __str__(self):
 		return self.nomeObra
