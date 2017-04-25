@@ -23,8 +23,6 @@
   				<img src='{{ pagina.pagina.url }}' width="210px" height="290px"><br>
   				<a href="/profile/pagina/{{pagina.id}}/deletar/" class="w3-btn w3-blue-grey w3-red">Deletar Pagina</a>
 			</div>
-			<!--<img src='{{ pagina.pagina.url }}' width="210px" height="290px">
-			<a href="/profile/pagina/{{pagina.id}}/deletar/" class="w3-btn w3-blue-grey w3-red">Deletar Pagina</a>-->
 		{% endfor %}
 		<form action="/profile/pagina/{{capitulo.id}}/new/" method="POST" enctype="multipart/form-data" style="clear: left;">
 			{% csrf_token %} 

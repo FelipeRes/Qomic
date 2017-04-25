@@ -76,7 +76,8 @@ def nova_obra(request):
 			nomeObra = form.cleaned_data['nome']
 			sinopse = form.cleaned_data['sinopse']
 			capa = form.cleaned_data['capa']
-			obra = models.Obra(usuario=usuario,nomeObra=nomeObra,sinopse=sinopse,ativada=False,capa=capa)
+			ativada = form.cleaned_data['ativada']
+			obra = models.Obra(usuario=usuario,nomeObra=nomeObra,sinopse=sinopse,ativada=ativada,capa=capa)
 			obra.save()
 			return HttpResponseRedirect(reverse(profile))
 		else:
@@ -212,3 +213,17 @@ def deletar_pagina(request, pagina_id):
 	capitulo = pagina.capitulo
 	pagina.delete()
 	return redirect('/profile/capitulo/'+str(capitulo.id)+'/alterar/')
+
+@login_required
+def ver_obra(request, obra_id):
+	return render(request,'ver_obra.html',{
+			'obra':models.Obra.objects.get(id=obra_id),
+			'capitulos':models.Capitulo.objects.filter(obra=obra_id),
+			},)
+
+@login_required
+def ver_capitulo(request, capitulo_id):
+	return render(request,'ver_capitulo.html',{
+			'capitulo':models.Capitulo.objects.get(id=capitulo_id),
+			'paginas':models.Pagina.objects.filter(capitulo=capitulo_id),
+			},)

@@ -1,0 +1,11 @@
+{% extends 'template.html' %}
+{% block content %}
+<h5><a href="/obra/{{capitulo.obra.id}}/ver"><-Retornar para obra desse capítulo</a></h5>
+<h1 class="w3-center">{{capitulo.nomeCapitulo}}</h1>
+	{% for pagina in paginas %}
+		<div class="w3-center w3-padding-large">
+  			<img src='{{ pagina.pagina.url }}'><br>
+		</div>
+	{% endfor %}
+<h5><a href="/obra/{{capitulo.obra.id}}/ver"><-Retornar para obra desse capítulo</a></h5>
+{% endblock %}

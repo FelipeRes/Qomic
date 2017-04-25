@@ -1,0 +1,28 @@
+{% extends 'template.html' %}
+{% block content %}
+<h5><a href="/"><-Retornar para página inicial</a></h5>
+	<h2>{{obra.nomeObra}}</h2>
+	<div style="position:inline;">
+		<div class="w3-left w3-padding-large">
+			<img src='{{ obra.capa.url }}' width="210px" height="290px">
+		</div>
+		<div class="w3-left w3-padding-large">
+			<h3>Sinopse: </h3>
+			<p>{{obra.sinopse}}</p>
+		</div>
+	</div>
+	<div style="clear: left;">
+	<hr>
+	{% if capitulos %}
+	    {% for capitulo in capitulos %}
+	    <div class="w3-left w3-padding-large">
+	    	<big class="w3-center">{{capitulo.nomeCapitulo}}</big><br>
+	    	<a href="/capitulo/{{capitulo.id}}/ver"><img src='{{ capitulo.capa.url }}' width="210px" height="290px"></a>
+	    </div>	
+	    {% endfor %}
+	{% else %}
+		<h2>Nenhum Capitulo</h2>
+	{% endif %}
+	</div>
+
+{% endblock %}

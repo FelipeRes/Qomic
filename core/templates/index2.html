@@ -7,7 +7,9 @@
     {% if obras %}
       {% for obra in obras%}
       <div class="w3-quarter">
+        <a href="/obra/{{obra.id}}/ver">
         <img src="{{ obra.capa.url }}" alt="Sandwich" style="width:100%">
+        </a>
         <h3>{{obra.nomeObra}}</h3>
         <p>{{obra.sinopse}}</p>
       </div>
