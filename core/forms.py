@@ -11,8 +11,8 @@ class UsuarioLogin(forms.Form):
 
 class NovaObra(forms.Form):
 	nome = forms.CharField(max_length=50)
-	sinopse = forms.CharField(max_length=500)
-	capa = forms.ImageField(label='Seleciona uma imagem de capa',widget=forms.FileInput())
+	sinopse = forms.CharField(max_length=500,widget=forms.TextInput(attrs={'size': '100'}))
+	capa = forms.ImageField(label='Capa',widget=forms.FileInput())
 	ativada = forms.BooleanField(label='Disponibilizar')
 
 class AlterarObra(forms.Form):
@@ -23,7 +23,7 @@ class AlterarObra(forms.Form):
 
 class NovoCapitulo(forms.Form):
 	nome = forms.CharField(max_length=50)
-	capa = forms.ImageField(label='Seleciona uma imagem de capa',widget=forms.FileInput())
+	capa = forms.ImageField(label='Capa',widget=forms.FileInput())
 	disponivel = forms.BooleanField(label='Disponibilizar',required=False)
 
 class AlterarCapitulo(forms.Form):
@@ -32,4 +32,4 @@ class AlterarCapitulo(forms.Form):
 	disponivel = forms.BooleanField(label='Disponibilizar',required=False)
 
 class NovaPagina(forms.Form):
-	pagina = forms.ImageField(label='Envie uma pagina',widget=forms.FileInput(),required=False)
+	pagina = forms.ImageField(widget=forms.FileInput(),required=True)

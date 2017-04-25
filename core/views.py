@@ -31,6 +31,7 @@ def usuario(request):
 		form = forms.UsuarioForm()
 	return render(request,'cadastrarUsuario.html',{'form': form,})
 
+@login_required
 def user_logout(request):
 	logout(request)
 	return HttpResponseRedirect(reverse(index))
@@ -105,7 +106,7 @@ def alterar_obra(request, obra_id):
 			if form.cleaned_data['ativada'] is not None:
 				obra.ativada = form.cleaned_data['ativada']
 			obra.save()
-			return HttpResponseRedirect(reverse(profile))
+			return redirect('/profile/obra/'+str(obra_id)+'/alterar/')
 		else:
 			return HttpResponse("Erro de envio de formulario")
 	else:
@@ -142,7 +143,7 @@ def novo_capitulo(request, obra_id):
 			capa = form.cleaned_data['capa']
 			capitulo = models.Capitulo(obra=obra,nomeCapitulo=nomeCapitulo,disponivel=False,capa=capa)
 			capitulo.save()
-			return HttpResponseRedirect(reverse(profile))
+			return redirect('/profile/obra/'+str(obra_id)+'/alterar/')
 		else:
 			return HttpResponse("Ocorreu algum erro")
 	else:
@@ -166,7 +167,7 @@ def alterar_capitulo(request, capitulo_id):
 			if form.cleaned_data['disponivel'] is not None:
 				capitulo.disponivel = form.cleaned_data['disponivel']
 			capitulo.save()
-			return HttpResponseRedirect(reverse(profile))
+			return redirect('/profile/capitulo/'+str(capitulo_id)+'/alterar/')
 		else:
 			return HttpResponse("Erro de envio de formulario")
 	else:
