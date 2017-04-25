@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Qomic</title>
-</head>
-<body>
-	<h1>Qomic</h1>
-	{% if login %}
-		<a href="profile">Minha conta</a>
-		<a href="logout">Logout</a>
-	{% else %}
-		<p style="color: {{messageColor}};">{{loginMessage}}</p>
-		<form action='' method="POST">
-			{{ form.as_p }} 
-			{% csrf_token %}
-			<input type="submit" value="Logar"/> ou 
-			<button><a href="usuario">Cadsatre-se</a></button>
-		</form>
-	{% endif %}
-</body>
-</html>
+{% extends 'template.html' %}
+{% block content %}
+	<div class="w3-center w3-padding-200">
+	<h1>Logar</h1>
+	<p style="color: {{messageColor}};">{{loginMessage}}</p>
+	<form action='' method="POST">
+		{{ form.as_p }} 
+		{% csrf_token %}
+		<input type="submit" value="Logar" class="w3-btn w3-blue-grey"/> ou 
+		<a href="usuario" class="w3-btn w3-blue-grey">Cadsatre-se</a>
+	</form>
+	</div>
+{%endblock%}

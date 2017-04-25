@@ -17,7 +17,7 @@
     		<p><big>Status:</big></br>
     			{% if obra.ativada %}Disponivel para visualização{%else%}Indisponivel para visualização{%endif%}
     		</p>
-    		<a href='profile/obra/{{ obra.id }}/alterar'><big>Editar</big></a>
+    		<a href='profile/obra/{{ obra.id }}/alterar' class="w3-btn w3-blue-grey"><big>Editar</big></a>
     		</td>
     	</tr>
     {% endfor %}
@@ -26,5 +26,5 @@
     <h2>Nenhuma obra...</h2>
 {% endif %}
 
-<a href="profile/obra/new" class="w3-bar-item w3-button"><h2>Criar Obra</h2></a>
+<a href="profile/obra/new" class="w3-btn w3-blue-grey"><h3>Criar Obra</h3></a>
 {% endblock %}

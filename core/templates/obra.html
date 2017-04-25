@@ -1,34 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>{{obra.Nome}}</title>
-</head>
-<body>
+{% extends 'template.html' %}
+{% block content %}
+	<h5><a href="/profile"><-Retornar para lista de obras</a></h5>
 	<h2>{{obra.nomeObra}}</h2>
-	<form action="." method="POST" enctype="multipart/form-data">
-		{% csrf_token %} 
-		{{ form.as_p }} 
-		<input type="submit" value="Salvar Alterações" /> 
-		<button><a href="/profile/obra/{{ obra.id }}/deletar">Deletar Obra</a></button>
-	</form>
+	<div style="position:inline;">
+		<div class="w3-left w3-padding-large">
+			<img src='{{ obra.capa.url }}' width="210px" height="290px">
+		</div>
+		<div class="w3-left w3-padding-large">
+			<form action="." method="POST" enctype="multipart/form-data">
+				{% csrf_token %} 
+				{{ form.as_p }} 
+				<input type="submit" value="Salvar Alterações" class="w3-btn w3-blue-grey"/> 
+				<a href="/profile/obra/{{ obra.id }}/deletar" class="w3-btn w3-blue-grey w3-red">Deletar Obra</a>
+			</form>
+		</div>
+	</div>
+	<div style="clear: left;">
 	<hr>
 	{% if capitulos %}
-		<table border=1px>
+		<table class="w3-table-all">
 		<tr>
-	    		<th colspan="2">Lista de Capitulos</td>
-	    		<th>Ativada</td>
+	    		<th>Lista de Capitulos</td>
+	    		<th>Informacões</td>
 	    </tr>
 	    {% for capitulo in capitulos %}
 	    	<tr>
-	    		<th><img src='{{ capitulo.capa.url }}' width="200px" height="200px"></td>
-	    		<th><a href='/profile/capitulo/{{ capitulo.id }}/alterar/'>{{ capitulo }}</a></td>
-	    		<th>{{ capitulo.disponivel }}</td>
+	    		<th><img src='{{ capitulo.capa.url }}' width="210px" height="290px"></td>
+	    		<th><h3>{{capitulo.nomeCapitulo}}</h3>
+	    		<p>Status:{{ capitulo.disponivel }}</p>
+	    		<a href='/profile/capitulo/{{ capitulo.id }}/alterar/' class="w3-btn w3-blue-grey">Editar</a>
+	    		</th>
 	    	</tr>
 	    {% endfor %}
 	    </table>
 	{% else %}
-		<p>Nenhuma Capitulo</p>
+		<h2>Nenhum Capitulo</h2>
 	{% endif %}
-	<a href="/profile/capitulo/{{obra.id}}/new/">Criar capitulo</a>
-</body>
-</html>
+	<a href="/profile/capitulo/{{obra.id}}/new/" class="w3-btn w3-blue-grey">Criar capitulo</a>
+	</div>
+{% endblock %}

@@ -1,27 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>{{capitulo.nomeCapitulo}}</title>
-</head>
-<body>
+{% extends 'template.html' %}
+{% block content %}
+	<h5><a href="/profile/obra/{{capitulo.obra.id}}/alterar/"><-Retornar para obra desse capítulo</a></h5>
 	<h2>{{capitulo.nomeCapitulo}}</h2>
-	<img src='{{ capitulo.capa.url }}' width="200px" height="200px">
-	<form action="." method="POST" enctype="multipart/form-data">
-		{% csrf_token %} 
-		{{ form.as_p }} 
-		<input type="submit" value="Salvar Alterações" /> 
-		<button><a href="/profile/capitulo/{{ capitulo.id }}/deletar">Deletar capitulo</a></button>
-	</form>
-	<a href="/profile/pagina/{{capitulo.id}}/new/">Criar capitulo</a>
-	<hr>
-	{% for pagina in paginas %}
-		<img src='{{ pagina.pagina.url }}' width="200px" height="200px">
-		<a href="/profile/pagina/{{pagina.id}}/deletar/">Deletar Pagina</a>
-	{% endfor %}
-	<form action="/profile/pagina/{{capitulo.id}}/new/" method="POST" enctype="multipart/form-data">
-		{% csrf_token %} 
-		{{ form2.as_p }} 
-		<input type="submit" value="Enviar nova página" /> 
-	</form>
-</body>
-</html>
+	<div style="position:inline;">
+		<div class="w3-left w3-padding-large">
+			<img src='{{ capitulo.capa.url }}' width="210px" height="290px">
+		</div>
+		<div class="w3-left w3-padding-large">
+			<form action="." method="POST" enctype="multipart/form-data">
+				{% csrf_token %} 
+				{{ form.as_p }} 
+				<input type="submit" value="Salvar Alterações" class="w3-btn w3-blue-grey"/> 
+				<a href="/profile/capitulo/{{ capitulo.id }}/deletar" class="w3-btn w3-blue-grey w3-red">Deletar capitulo</a>
+			</form>
+		</div>
+	</div>
+	<div style="clear: left;">
+		<hr>
+		<h2>Páginas</h2>
+		{% for pagina in paginas %}
+			<div class="w3-left w3-padding-large">
+  				<img src='{{ pagina.pagina.url }}' width="210px" height="290px"><br>
+  				<a href="/profile/pagina/{{pagina.id}}/deletar/" class="w3-btn w3-blue-grey w3-red">Deletar Pagina</a>
+			</div>
+			<!--<img src='{{ pagina.pagina.url }}' width="210px" height="290px">
+			<a href="/profile/pagina/{{pagina.id}}/deletar/" class="w3-btn w3-blue-grey w3-red">Deletar Pagina</a>-->
+		{% endfor %}
+		<form action="/profile/pagina/{{capitulo.id}}/new/" method="POST" enctype="multipart/form-data" style="clear: left;">
+			{% csrf_token %} 
+			<h3>Envie uma nova página:</h3>
+			{{ form2.as_p }} 
+			<input type="submit" class="w3-btn w3-blue-grey"/> 
+		</form>
+	</div>
+{% endblock %}

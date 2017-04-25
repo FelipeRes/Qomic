@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Criar Obra</title>
-</head>
-<body>
+{% extends 'template.html' %}
+{% block content %}
 	<h2>{{action}}</h2>
 	<form action="." method="POST" enctype="multipart/form-data">
 		{% csrf_token %} 
 		{{ form.as_p }} 
-		<input type="submit" value="{{submeterAcao}}" /> 
+		<input type="submit" value="{{submeterAcao}}" class="w3-btn w3-blue-grey"/> 
 	</form>
-</body>
-</html>
+{% endblock %}
