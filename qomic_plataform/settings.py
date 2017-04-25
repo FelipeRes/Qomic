@@ -26,6 +26,7 @@ SECRET_KEY = 'z^djt_yo03#-st62w88q#jbgvkq#yt)5!ak+^nq)@qw#^4_x2q'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'qomic.herokuapp.com',
 	'mighty-savannah-40929.herokuapp.com',
 	'localhost',
 ]
