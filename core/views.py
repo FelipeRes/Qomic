@@ -214,14 +214,12 @@ def deletar_pagina(request, pagina_id):
 	pagina.delete()
 	return redirect('/profile/capitulo/'+str(capitulo.id)+'/alterar/')
 
-@login_required
 def ver_obra(request, obra_id):
 	return render(request,'ver_obra.html',{
 			'obra':models.Obra.objects.get(id=obra_id),
 			'capitulos':models.Capitulo.objects.filter(obra=obra_id),
 			},)
 
-@login_required
 def ver_capitulo(request, capitulo_id):
 	return render(request,'ver_capitulo.html',{
 			'capitulo':models.Capitulo.objects.get(id=capitulo_id),
